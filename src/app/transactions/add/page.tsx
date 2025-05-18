@@ -38,7 +38,8 @@ export default function AddTransactionPage() {
     .then((res) => console.log("✅ Webhook sent:", res.status))
     .catch((err) => console.error("❌ Webhook error:", err));
 
-  // ...any additional form logic
+  // // Trigger redeploy
+
 };
 
 
@@ -58,8 +59,8 @@ export default function AddTransactionPage() {
     addTransactionToMockData(newTransactionData);
     console.log("New Transaction Added via addTransactionToMockData:", newTransactionData);
 
-    // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 100)); 
+    const delay = () => new Promise(resolve => setTimeout(resolve, 100));
+await delay();
 
     toast({
       title: "Transaction Saved",
