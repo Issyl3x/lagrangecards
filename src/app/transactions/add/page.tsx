@@ -19,6 +19,7 @@ export default function AddTransactionPage() {
 
     const handleSubmit = async (data: TransactionFormValues) => {
   setIsLoading(true);
+  console.log("🔔 Webhook triggered with data:", data); // ✅ Add this line
 
   await fetch("https://hook.us2.make.com/y7mimw79elkvk3dm3x86xu7v373ah4f2", {
     method: "POST",
@@ -33,10 +34,13 @@ export default function AddTransactionPage() {
       submittedBy: "jessrafalfernandez@gmail.com",
       submittedAt: new Date().toISOString(),
     }),
-  });
+  })
+    .then((res) => console.log("✅ Webhook sent:", res.status))
+    .catch((err) => console.error("❌ Webhook error:", err));
 
-  // continue with the rest of the submit logic...
+  // ...any additional form logic
 };
+
 
 
 
