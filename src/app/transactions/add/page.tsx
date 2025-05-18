@@ -1,5 +1,9 @@
-
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 "use client";
+import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
+
+
 
 import * as React from "react";
 import { TransactionForm, type TransactionFormValues } from "../components/TransactionForm";
@@ -17,10 +21,10 @@ export default function AddTransactionPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
-    const handleSubmit = async (data: TransactionFormValues) => {
+   const handleSubmit = async (data: TransactionFormValues) => {
   setIsLoading(true);
-  console.log("🔔 Webhook triggered with data:", data); // ✅ Add this line
 
+  // 🔔 Send webhook to Make
   await fetch("https://hook.us2.make.com/y7mimw79elkvk3dm3x86xu7v373ah4f2", {
     method: "POST",
     headers: {
@@ -35,12 +39,36 @@ export default function AddTransactionPage() {
       submittedAt: new Date().toISOString(),
     }),
   })
-    .then((res) => console.log("✅ Webhook sent:", res.status))
-    .catch((err) => console.error("❌ Webhook error:", err));
+    .then((res) => console.log("Webhook sent:", res.status))
+    .catch((err) => console.error("Webhook error:", err));
 
-  // // Trigger redeploy
+  // ✅ Add transaction to mock data
+  const newTransactionData: Transaction = {
+    id: uuidv4(),
+    ...data,
+    date: format(data.date, "yyyy-MM-dd"),
+  };
 
+  addTransactionToMockData(newTransactionData);
+  console.log("New Transaction Added via addTransactionToMockData:", newTransactionData);
+
+  // 🕒 Delay to simulate async operation
+  await delay(100);
+
+  // ✅ Show toast
+  toast({
+    title: "Transaction Saved",
+    description: (
+      <>
+        Transaction for {data.vendor} of ${data.amount.toFixed(2)} has been saved.
+      </>
+    ),
+  });
+
+  // 🔁 Redirect or reset form if needed
+  router.push("/transactions");
 };
+
 
 
 
