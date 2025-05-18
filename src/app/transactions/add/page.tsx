@@ -17,8 +17,28 @@ export default function AddTransactionPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleSubmit = async (data: TransactionFormValues) => {
-    setIsLoading(true);
+    const handleSubmit = async (data: TransactionFormValues) => {
+  setIsLoading(true);
+
+  await fetch("https://hook.us2.make.com/y7mimw79elkvk3dm3x86xu7v373ah4f2", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      property: data.property,
+      amount: data.amount,
+      category: data.category,
+      note: data.note || "",
+      submittedBy: "jessrafalfernandez@gmail.com",
+      submittedAt: new Date().toISOString(),
+    }),
+  });
+
+  // continue with the rest of the submit logic...
+};
+
+
 
     const newTransactionData: Transaction = {
       id: uuidv4(), 
