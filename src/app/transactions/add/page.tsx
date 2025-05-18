@@ -24,7 +24,7 @@ export default function AddTransactionPage() {
    const handleSubmit = async (data: TransactionFormValues) => {
   setIsLoading(true);
 
-  // 🔔 Send webhook to Make
+  // Send webhook
   await fetch("https://hook.us2.make.com/y7mimw79elkvk3dm3x86xu7v373ah4f2", {
     method: "POST",
     headers: {
@@ -38,38 +38,24 @@ export default function AddTransactionPage() {
       submittedBy: "jessrafalfernandez@gmail.com",
       submittedAt: new Date().toISOString(),
     }),
-  })
-    .then((res) => console.log("Webhook sent:", res.status))
-    .catch((err) => console.error("Webhook error:", err));
+  });
 
-  // ✅ Add transaction to mock data
-  const newTransactionData: Transaction = {
-    id: uuidv4(),
-    ...data,
-    date: format(data.date, "yyyy-MM-dd"),
-  };
+  // ✅ Simulate delay (optional, to allow webhook time)
+  const delay = () => new Promise(resolve => setTimeout(resolve, 100));
+  await delay();
 
-  addTransactionToMockData(newTransactionData);
-  console.log("New Transaction Added via addTransactionToMockData:", newTransactionData);
-
-  // 🕒 Delay to simulate async operation
-  await delay(100);
-
-  // ✅ Show toast
+  // ✅ Continue rest of logic (e.g. toast, router.push)
   toast({
     title: "Transaction Saved",
     description: (
       <>
-        Transaction for {data.vendor} of ${data.amount.toFixed(2)} has been saved.
+        Transaction for <b>{data.vendor}</b> of <b>${data.amount.toFixed(2)}</b> has been saved.
       </>
     ),
   });
 
-  // 🔁 Redirect or reset form if needed
   router.push("/transactions");
 };
-
-
 
 
 
