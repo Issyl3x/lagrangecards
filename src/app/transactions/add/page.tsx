@@ -21,10 +21,10 @@ export default function AddTransactionPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
-   const handleSubmit = async (data: TransactionFormValues) => {
+  const handleSubmit = async (data: TransactionFormValues) => {
   setIsLoading(true);
 
-  // Send webhook
+  // 📤 Send webhook to Make
   await fetch("https://hook.us2.make.com/y7mimw79elkvk3dm3x86xu7v373ah4f2", {
     method: "POST",
     headers: {
@@ -35,27 +35,29 @@ export default function AddTransactionPage() {
       amount: data.amount,
       category: data.category,
       note: data.note || "",
-      submittedBy: "jessrafalfernandez@gmail.com",
+      submittedBy: "jessrafalfernandez@gmail.com", // ✅ your test email
       submittedAt: new Date().toISOString(),
     }),
   });
 
-  // ✅ Simulate delay (optional, to allow webhook time)
-  const delay = () => new Promise(resolve => setTimeout(resolve, 100));
+  // ⏱ Simulate async delay
+  const delay = () => new Promise((resolve) => setTimeout(resolve, 100));
   await delay();
 
-  // ✅ Continue rest of logic (e.g. toast, router.push)
+  // ✅ Toast confirmation
   toast({
     title: "Transaction Saved",
     description: (
       <>
-        Transaction for <b>{data.vendor}</b> of <b>${data.amount.toFixed(2)}</b> has been saved.
+        Transaction for <b>{data.vendor}</b> of ${data.amount.toFixed(2)} has been saved.
       </>
     ),
   });
 
+  // 🔁 Redirect to transactions page
   router.push("/transactions");
 };
+
 
 
 
