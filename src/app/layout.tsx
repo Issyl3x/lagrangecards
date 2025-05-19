@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/lib/auth-context";
 
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -56,7 +57,8 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) {//const { isAdmin } = useAuthContext();
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
@@ -95,7 +97,39 @@ export default function RootLayout({
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
-                    ))}
+                    ))}// {isAdmin && (
+  <>
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild variant="ghost" className="w-full justify-start">
+        <Link href="/cards">
+          <List className="h-5 w-5" />
+          <span className="ml-2">Manage Cards</span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild variant="ghost" className="w-full justify-start">
+        <Link href="/investors">
+          <Users className="h-5 w-5" />
+          <span className="ml-2">Investors</span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild variant="ghost" className="w-full justify-start">
+        <Link href="/export">
+          <FileOutput className="h-5 w-5" />
+          <span className="ml-2">Export</span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  </>
+)}
+
+</SidebarMenu>  // 👈 leave this here
+
                   </SidebarMenu>
                 </SidebarContent>
                 {/* Footer can be added back if general app settings are needed later */}
