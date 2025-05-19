@@ -1,5 +1,6 @@
-import { useAuthContext } from "@/lib/auth-context";
+"use client";
 
+import { useAuthContext } from "@/lib/auth-context";
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
