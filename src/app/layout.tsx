@@ -1,5 +1,4 @@
 
-
 import { useAuthContext } from "@/lib/auth-context";
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -58,7 +57,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {//const { isAdmin } = useAuthContext();
+}>) {//
   
   return (
     <html lang="en" suppressHydrationWarning>
@@ -99,6 +98,7 @@ export default function RootLayout({
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}// {isAdmin && (
+                      
   <>
     <SidebarMenuItem>
       <SidebarMenuButton asChild variant="ghost" className="w-full justify-start">
@@ -128,7 +128,7 @@ export default function RootLayout({
     </SidebarMenuItem>
   </>
 )}
-
+  <AdminSidebarItems /> 
 </SidebarMenu>  // 👈 leave this here
 
                   </SidebarMenu>

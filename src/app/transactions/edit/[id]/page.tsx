@@ -1,3 +1,27 @@
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/lib/auth-context";
+
+export default function Page() {
+  const { user, isAdmin, loading } = useAuthContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      router.push("/"); // redirect non-admins
+    }
+  }, [loading, isAdmin]);
+
+  if (!isAdmin) return null;
+
+  return (
+    <div>
+      {/* Your page content */}
+      Admin-only content goes here.
+    </div>
+  );
+}
 
 "use client";
 
