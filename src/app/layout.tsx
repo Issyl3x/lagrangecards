@@ -1,4 +1,4 @@
-"use client";
+
 
 import { useAuthContext } from "@/lib/auth-context";
 import type { Metadata } from 'next';
